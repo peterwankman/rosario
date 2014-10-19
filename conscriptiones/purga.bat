@@ -1,6 +1,6 @@
 @ECHO OFF
 
-SET NOMEN_SOLUTIONIS=ROSARIO
+SET NOMEN_SOLUTIONIS=rosario
 
 PUSHD ..
 CALL :PURGA_TABULAM rosario
@@ -19,7 +19,7 @@ EXIT /B 0
 :PURGA_TABULAM
 SETLOCAL
 
-ECHO Purog tabulam, "%1" nominatur...
+ECHO Purgo tabulam, "%1" nominatur...
 
 PUSHD %1
 CALL :PURGA_STELLAM_SI_EST *.USER
