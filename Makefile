@@ -3,9 +3,10 @@ BIN=destinatum
 CC=gcc
 
 CFLAGS=-O0 -ggdb
+OPTS=-DCUM_RETICULUM
 
 $(BIN)/rosario: $(SRC)/rosario.c
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(OPTS)  -o $@ $^
 
 .PHONY: clean
 

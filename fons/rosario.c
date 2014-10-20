@@ -3,12 +3,22 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef SINE_RETICULUM
+#undef CUM_RETICULUM
+#endif
+
 #ifdef WIN32
+#ifdef CUM_RETICULUM
 #include <WinSock2.h>
+#else
+#include <Windows.h>
+#endif
 
 #define dormi(tempus)		Sleep((tempus) * 1000)
 #define claude(adiunctio)	closesocket(adiunctio)
 #else
+
+#ifdef CUM_RETICULUM
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -17,6 +27,7 @@
 #define SOCKADDR struct sockaddr
 #define SOCKADDR_IN struct sockaddr_in
 #define INVALID_SOCKET -1
+#endif
 
 #define dormi(tempus)		sleep(tempus)
 #define claude(adiunctio)	close(adiunctio)
@@ -139,7 +150,9 @@ static const char **rosario[7] = {
 	rosariogaudioso
 };
 
+#if defined CUM_RETICULUM
 static SOCKET adiunctio;
+#endif
 
 /**/
 
@@ -150,7 +163,7 @@ static int proclama_erratum(const char *sententia) {
 }
 
 static int fiat_fenestra(void) {
-#ifdef WIN32
+#if defined WIN32 && defined CUM_RETICULUM
 	WSADATA wsa;
 	return WSAStartup(MAKEWORD(2,0), &wsa);
 #else
@@ -158,6 +171,7 @@ static int fiat_fenestra(void) {
 #endif
 }
 
+#ifdef CUM_RETICULUM
 static char* fiat_convivator(void) {
 	char *convivator;
 	
@@ -169,8 +183,10 @@ static char* fiat_convivator(void) {
 
 	return convivator;
 }
+#endif
 
 static void dic(const char *sententia) {
+#ifdef CUM_RETICULUM
 	SOCKADDR_IN addr;
 	char *convivator = fiat_convivator();
 
@@ -186,6 +202,8 @@ static void dic(const char *sententia) {
 	free(convivator);
 
 	sendto(adiunctio, sententia, strlen(sententia), 0, (SOCKADDR*)&addr, sizeof(addr));
+#endif
+
 	printf("%s\n", sententia);
 	dormi(1);	
 }
@@ -214,6 +232,7 @@ int main(void) {
 	time_t nunc;
 	int dies, i, j;
 
+#ifdef CUM_RETICULUM
 	if(fiat_fenestra()) {
 		proclama_erratum("Officium fiat_fenestra() clamat: Mortuus sum.");
 		return EXIT_FAILURE;
@@ -224,6 +243,7 @@ int main(void) {
 		proclama_erratum("Officium socket() clamat: Adiunctio invalidum est.");
 		return EXIT_FAILURE;
 	}
+#endif
 
 	nunc = time(NULL);
 	dies = localtime(&nunc)->tm_wday;
@@ -249,10 +269,13 @@ int main(void) {
 	ora(gloriapatri, 2);
 	ora(omijesu, 1);
 
+#ifdef CUM_RETICULUM
 	claude(adiunctio);
 #ifdef WIN32
 	WSACleanup();
 #endif
+#endif
 
 	return EXIT_SUCCESS;
 }
+
