@@ -18,7 +18,7 @@ if [ -z $1 ]; then
 	exec screen -dmS $SESSIO $0 fungi
 else
 	while true; do
-		exec $MANDATUM
+		$MANDATUM
 	done
 fi
 
